@@ -99,7 +99,7 @@ export const GeneratorControl = generator => ControlFunction.of(self => {
 });
 
 export function fork(operation) {
-  return ({ resume, call } ) => {
+  return ({ resume, call }) => {
     let noop = x => x;
     let child = call(operation, { halt: noop });
 

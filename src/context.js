@@ -26,6 +26,7 @@ export class ExecutionContext {
     this.options = options;
     this.children = new Set();
     this.exitHooks = new Set();
+    this.effects = new Map();
     this.state = 'unstarted';
     this.resume = this.resume.bind(this);
     this.fail = this.fail.bind(this);

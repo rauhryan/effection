@@ -1,5 +1,6 @@
 export { timeout } from './timeout';
 export { fork, join } from './control';
+export { use, Effect } from './effect';
 
 import { ExecutionContext } from './context';
 
