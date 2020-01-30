@@ -5,7 +5,7 @@
 import expect from 'expect';
 import mock from 'jest-mock';
 
-import { main } from '../src/index';
+import { main, fork } from '../src/index';
 
 describe('Co-routine guarantees', () => {
   let top, inner, error;
@@ -226,5 +226,27 @@ describe('catching errors repeatedly', () => {
       });
     });
 
+  });
+});
+
+describe('catching errors from a fork', () => {
+  let forked, error, other;
+  beforeEach(() => {
+    main(function*() {
+      forked = yield fork();
+      try {
+        yield ctl => other = ctl;;
+      } catch (e) {
+        error = e;
+      }
+    });
+    expect(forked).toBeDefined();
+    expect(other).toBeDefined();
+    forked.fail(new Error('boom!'));
+  });
+
+  it('can catch an error even if the failing child ', () => {
+    expect(error).toBeDefined();
+    expect(error.message).toEqual('boom!');
   });
 });
