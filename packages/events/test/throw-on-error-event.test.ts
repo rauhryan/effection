@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'mocha';
 import * as expect from 'expect'
 
-import { Context } from 'effection';
+import { Context, Operation } from 'effection';
 import { EventEmitter } from 'events';
 
 import { World } from './helpers';
@@ -15,7 +15,7 @@ describe("throwOnErrorEvent", () => {
 
   beforeEach(async () => {
     emitter = new EventEmitter();
-    context = World.spawn(function*() {
+    context = World.spawn(function*(): Operation<void> {
       yield throwOnErrorEvent(emitter);
       yield;
     });

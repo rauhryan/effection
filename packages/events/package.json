@@ -2,8 +2,11 @@
   "name": "@effection/events",
   "version": "0.6.1",
   "description": "Helpers for listening to events with effection",
+  "source": "src/index.ts",
   "main": "dist/index.js",
-  "typings": "dist/index.d.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/thefrontside/bigtest.git",
   "author": "Frontside Engineering <engineering@frontside.io>",
   "license": "MIT",
@@ -14,12 +17,14 @@
   "scripts": {
     "lint": "echo [skip @effection/events]",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
-    "prepack": "tsc --outdir dist --project tsconfig.dist.json --declaration --sourcemap --module commonjs",
+    "prepack": "microbundle",
     "mocha": "mocha -r ts-node/register"
   },
   "devDependencies": {
+    "@frontside/tsconfig": "0.0.1",
     "@types/node": "^12.7.11",
     "expect": "^25.4.0",
+    "microbundle": "^0.12.0-next.9",
     "mocha": "^7.1.1",
     "ts-node": "^8.9.0",
     "typescript": "^3.7.0"

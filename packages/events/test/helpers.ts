@@ -1,9 +1,11 @@
-import { main, Context, Controls, Operation } from 'effection';
+import { main, Context, Controls } from 'effection';
 
-export let World: Context & Controls;
+export type World<T> = Context<T> & Controls<T> 
+
+export let World: World<any>;
 
 beforeEach(() => {
-  World = main(undefined) as Context & Controls;
+  World = main(undefined) as World<void>;
 });
 
 afterEach(() => {
