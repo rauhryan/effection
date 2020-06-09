@@ -45,6 +45,37 @@ describe('subscribable objects', () => {
 
   });
 
+  describe('drain', () => {
+    let values: Thing[];
+    let result: number;
+
+    beforeEach(async () => {
+      values = [];
+      let drained = await spawn(Subscribable.from(source).drain());
+      while(true) {
+        let iter = drained.next();
+        if(iter.done) {
+          result = iter.value;
+          break;
+        } else {
+          values.push(iter.value);
+        }
+      }
+    });
+
+    it('iterates synchronously through all members of the subscribable', () => {
+      expect(values).toEqual([
+        {name: 'bob', type: 'person' },
+        {name: 'alice', type: 'person' },
+        {name: 'world', type: 'planet' },
+      ])
+    });
+
+    it('preserves the return type', () => {
+      expect(result).toEqual(3);
+    });
+  });
+
   describe('map', () => {
     let values: string[];
     let result: number;

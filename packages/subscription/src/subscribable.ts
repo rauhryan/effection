@@ -54,6 +54,15 @@ export class Chain<T, TReturn> implements Subscribable<T,TReturn> {
     return forEach(this.source, visit);
   }
 
+  *drain(): Operation<Iterator<T,TReturn>> {
+    let values: Array<T> = [];
+    let result = yield this.forEach(function*(item) { values.push(item) })
+    return (function*() {
+      yield *values;
+      return result;
+    })()
+  }
+
   *first(): Operation<T | undefined> {
     let subscription: Subscription<T, TReturn> = yield subscribe(this.source);
     let { done, value } = yield subscription.next();
